@@ -17,7 +17,7 @@ class TestAPI(unittest.TestCase):
 
     def test_symbolname_future_get(self):
         resp = self._client.symbolname_future_get(
-            symbolname_future_get.Request(enum_code.FutureCode.NK225mini)
+            symbolname_future_get.Request(future_code=enum_code.FutureCode.NK225mini)
         )
         self.assertIsNotNone(resp.symbol)
         self.assertIsNotNone(resp.symbolname)
@@ -25,7 +25,9 @@ class TestAPI(unittest.TestCase):
         today = datetime.date.today()
         next_month = today + datetime.timedelta(days=30)
         resp = self._client.symbolname_future_get(
-            symbolname_future_get.Request(enum_code.FutureCode.NK225mini, next_month)
+            symbolname_future_get.Request(
+                future_code=enum_code.FutureCode.NK225mini, deriv_month=next_month
+            )
         )
         self.assertIsNotNone(resp.symbol)
         self.assertIsNotNone(resp.symbolname)
@@ -33,7 +35,9 @@ class TestAPI(unittest.TestCase):
     def test_symbolname_option_get(self):
         resp = self._client.symbolname_option_get(
             symbolname_option_get.Request(
-                enum_code.OptionCode.NK225op, enum_code.PutOrCall.Put, 35000
+                option_code=enum_code.OptionCode.NK225op,
+                put_or_call=enum_code.PutOrCall.Put,
+                strike_price=35000,
             )
         )
         self.assertIsNotNone(resp.symbol)
@@ -43,7 +47,10 @@ class TestAPI(unittest.TestCase):
         next_month = today + datetime.timedelta(days=30)
         resp = self._client.symbolname_option_get(
             symbolname_option_get.Request(
-                enum_code.OptionCode.NK225op, enum_code.PutOrCall.Put, 35000, next_month
+                option_code=enum_code.OptionCode.NK225op,
+                put_or_call=enum_code.PutOrCall.Put,
+                strike_price=35000,
+                deriv_month=next_month,
             )
         )
         self.assertIsNotNone(resp.symbol)
@@ -51,15 +58,19 @@ class TestAPI(unittest.TestCase):
 
     def test_board_get(self):
         resp = self._client.board_get(
-            board_get.Request("130046718", enum_code.MarketCode.WholeDay)
+            board_get.Request(
+                symbol="130046718", market_code=enum_code.MarketCode.WholeDay
+            )
         )
         self.assertIsNotNone(resp)
 
     def test_register(self):
         self._client.unregister_all_put()
         symbols = [
-            register_put.SymbolExchange("130046718", enum_code.MarketCode.WholeDay)
+            register_put.SymbolExchange(
+                symbol="130046718", exchange=enum_code.MarketCode.WholeDay
+            )
         ]
-        resp = self._client.register_put(register_put.Request(symbols))
+        resp = self._client.register_put(register_put.Request(symbols=symbols))
         self.assertIsNotNone(resp)
         print(resp)

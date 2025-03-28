@@ -16,7 +16,7 @@ class Client:
 
     def _set_token(self, api_password: str) -> None:
         handler = auth_token.Handler(self._port)
-        resp = handler.handle(auth_token.Request(api_password))
+        resp = handler.handle(auth_token.Request(api_password=api_password))
         self._token = resp.token
 
     def board_get(self, req: board_get.Request) -> board_get.Response:
