@@ -1,8 +1,7 @@
-import requests
-
+import auth_token
+import board_get
 import symbolname_future_get
 import symbolname_option_get
-import auth_token
 
 LIVE_PORT = 18080
 TEST_PORT = 18081
@@ -17,6 +16,10 @@ class Client:
         handler = auth_token.Handler(self._port)
         resp = handler.handle(auth_token.Request(api_password))
         self._token = resp.token
+
+    def board_get(self, req: board_get.Request) -> board_get.Response:
+        handler = board_get.Handler(self._port, self._token)
+        return handler.handle(req)
 
     def symbolname_future_get(
         self, req: symbolname_future_get.Request

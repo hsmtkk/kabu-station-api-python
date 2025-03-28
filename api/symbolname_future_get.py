@@ -41,11 +41,11 @@ class Response:
 
 class Handler(handler.Handler):
     def __init__(self, port: int, token: str):
-        super().__init__(port, "/symbolname/future")
+        super().__init__(port)
         self._token = token
 
     def handle(self, req: Request) -> Response:
-        url = self.make_url()
+        url = self.make_url("/symbolname/future")
         params = {"FutureCode": req.future_code, "DerivMonth": req.deriv_month}
         resp = requests.get(url, params=params, headers={"X-API-KEY": self._token})
         decoded = self.decode_response(resp)

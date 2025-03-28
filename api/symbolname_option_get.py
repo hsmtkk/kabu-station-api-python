@@ -55,11 +55,11 @@ class Response:
 
 class Handler(handler.Handler):
     def __init__(self, port: int, token: str):
-        super().__init__(port, "/symbolname/option")
+        super().__init__(port)
         self._token = token
 
     def handle(self, req: Request) -> Response:
-        url = self.make_url()
+        url = self.make_url("/symbolname/option")
         params = {
             "OptionCode": req.option_code,
             "DerivMonth": req.deriv_month,

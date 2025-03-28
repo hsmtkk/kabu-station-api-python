@@ -28,10 +28,10 @@ class Response:
 
 class Handler(handler.Handler):
     def __init__(self, port: int):
-        super().__init__(port, "/token")
+        super().__init__(port)
 
     def handle(self, req: Request) -> Response:
-        url = self.make_url()
+        url = self.make_url("/token")
         params = {"APIPassword": req.api_password}
         resp = requests.post(url, json=params)
         decoded = self.decode_response(resp)

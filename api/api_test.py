@@ -3,6 +3,7 @@ import os
 import unittest
 
 import api
+import board_get
 import enum_code
 import symbolname_future_get
 import symbolname_option_get
@@ -46,3 +47,9 @@ class TestAPI(unittest.TestCase):
         )
         self.assertIsNotNone(resp.symbol)
         self.assertIsNotNone(resp.symbolname)
+
+    def test_board_get(self):
+        resp = self._client.board_get(
+            board_get.Request("130046718", enum_code.MarketCode.WholeDay)
+        )
+        print(resp)

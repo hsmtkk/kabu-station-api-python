@@ -15,3 +15,10 @@ class OptionCode(enum.StrEnum):
 class PutOrCall(enum.StrEnum):
     Put = "P"
     Call = "C"
+
+
+class MarketCode(enum.IntEnum):
+    Tokyo = 1
+    WholeDay = 2
+    Day = 23
+    Night = 24

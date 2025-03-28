@@ -2,12 +2,11 @@ import requests
 
 
 class Handler:
-    def __init__(self, port: int, path: str) -> None:
+    def __init__(self, port: int) -> None:
         self._port = port
-        self._path = path
 
-    def make_url(self) -> str:
-        return f"http://localhost:{self._port}/kabusapi{self._path}"
+    def make_url(self, path: str) -> str:
+        return f"http://localhost:{self._port}/kabusapi{path}"
 
     def decode_response(self, resp: requests.Response) -> dict:
         resp.raise_for_status()
