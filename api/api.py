@@ -1,7 +1,9 @@
 import auth_token
 import board_get
+import register_put
 import symbolname_future_get
 import symbolname_option_get
+import unregister_all_put
 
 LIVE_PORT = 18080
 TEST_PORT = 18081
@@ -21,6 +23,10 @@ class Client:
         handler = board_get.Handler(self._port, self._token)
         return handler.handle(req)
 
+    def register_put(self, req: register_put.Request) -> register_put.Response:
+        handler = register_put.Handler(self._port, self._token)
+        return handler.handle(req)
+
     def symbolname_future_get(
         self, req: symbolname_future_get.Request
     ) -> symbolname_future_get.Response:
@@ -32,6 +38,10 @@ class Client:
     ) -> symbolname_option_get.Response:
         handler = symbolname_option_get.Handler(self._port, self._token)
         return handler.handle(req)
+
+    def unregister_all_put(self) -> None:
+        handler = unregister_all_put.Handler(self._port, self._token)
+        handler.handle()
 
 
 class LiveClient(Client):

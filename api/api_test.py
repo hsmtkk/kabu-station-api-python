@@ -5,6 +5,7 @@ import unittest
 import api
 import board_get
 import enum_code
+import register_put
 import symbolname_future_get
 import symbolname_option_get
 
@@ -52,4 +53,13 @@ class TestAPI(unittest.TestCase):
         resp = self._client.board_get(
             board_get.Request("130046718", enum_code.MarketCode.WholeDay)
         )
+        self.assertIsNotNone(resp)
+
+    def test_register(self):
+        self._client.unregister_all_put()
+        symbols = [
+            register_put.SymbolExchange("130046718", enum_code.MarketCode.WholeDay)
+        ]
+        resp = self._client.register_put(register_put.Request(symbols))
+        self.assertIsNotNone(resp)
         print(resp)
