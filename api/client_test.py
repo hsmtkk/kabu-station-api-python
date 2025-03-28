@@ -2,7 +2,7 @@ import datetime
 import os
 import unittest
 
-import api
+import client
 import board_get
 import enum_code
 import register_put
@@ -13,7 +13,7 @@ import symbolname_option_get
 class TestAPI(unittest.TestCase):
     def setUp(self):
         apiPassword = os.environ["KABU_STATION_API_PASSWORD"]
-        self._client = api.LiveClient(apiPassword)
+        self._client = client.LiveClient(apiPassword)
 
     def test_symbolname_future_get(self):
         resp = self._client.symbolname_future_get(
