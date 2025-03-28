@@ -4,6 +4,8 @@ import unittest
 
 import api
 import enum_code
+import symbolname_future_get
+import symbolname_option_get
 
 
 class TestAPI(unittest.TestCase):
@@ -12,31 +14,35 @@ class TestAPI(unittest.TestCase):
         self._client = api.LiveClient(apiPassword)
 
     def test_symbolname_future_get(self):
-        (symbol, symbolname) = self._client.symbolname_future_get(
-            enum_code.FutureCode.NK225mini
+        resp = self._client.symbolname_future_get(
+            symbolname_future_get.Request(enum_code.FutureCode.NK225mini)
         )
-        self.assertIsNotNone(symbol)
-        self.assertIsNotNone(symbolname)
+        self.assertIsNotNone(resp.symbol)
+        self.assertIsNotNone(resp.symbolname)
 
         today = datetime.date.today()
         next_month = today + datetime.timedelta(days=30)
-        (symbol, symbolname) = self._client.symbolname_future_get(
-            enum_code.FutureCode.NK225mini, next_month
+        resp = self._client.symbolname_future_get(
+            symbolname_future_get.Request(enum_code.FutureCode.NK225mini, next_month)
         )
-        self.assertIsNotNone(symbol)
-        self.assertIsNotNone(symbolname)
+        self.assertIsNotNone(resp.symbol)
+        self.assertIsNotNone(resp.symbolname)
 
     def test_symbolname_option_get(self):
-        (symbol, symbolname) = self._client.symbolname_option_get(
-            enum_code.OptionCode.NK225op, enum_code.PutOrCall.Put, 38000
+        resp = self._client.symbolname_option_get(
+            symbolname_option_get.Request(
+                enum_code.OptionCode.NK225op, enum_code.PutOrCall.Put, 35000
+            )
         )
-        self.assertIsNotNone(symbol)
-        self.assertIsNotNone(symbolname)
+        self.assertIsNotNone(resp.symbol)
+        self.assertIsNotNone(resp.symbolname)
 
         today = datetime.date.today()
         next_month = today + datetime.timedelta(days=30)
-        (symbol, symbolname) = self._client.symbolname_option_get(
-            enum_code.OptionCode.NK225op, enum_code.PutOrCall.Put, 38000, next_month
+        resp = self._client.symbolname_option_get(
+            symbolname_option_get.Request(
+                enum_code.OptionCode.NK225op, enum_code.PutOrCall.Put, 35000, next_month
+            )
         )
-        self.assertIsNotNone(symbol)
-        self.assertIsNotNone(symbolname)
+        self.assertIsNotNone(resp.symbol)
+        self.assertIsNotNone(resp.symbolname)
